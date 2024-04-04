@@ -13,11 +13,12 @@
           <in>Dialog_plain_19.h</in>
         </df>
         <df name="Ttgo">
-          <in>Ttgo.h</in>
+          <in>BallonLora.cpp</in>
+          <in>BallonLora.h</in>
         </df>
       </df>
       <df name="src">
-        <in>gateway.cpp</in>
+        <in>sender.cpp</in>
       </df>
       <df name="test">
       </df>

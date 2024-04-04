@@ -4,11 +4,12 @@
     <df root="." name="0">
       <df name="lib">
         <df name="Ttgo">
-          <in>Ttgo.h</in>
+          <in>BallonLora.cpp</in>
+          <in>BallonLora.h</in>
         </df>
       </df>
       <df name="src">
-        <in>gateway.cpp</in>
+        <in>sender.cpp</in>
       </df>
       <in>platformio.ini</in>
     </df>
@@ -556,11 +557,13 @@
           <preBuildCommand></preBuildCommand>
         </preBuild>
       </makefileType>
-      <item path="lib/Ttgo/Ttgo.h" ex="false" tool="3" flavor2="0">
+      <item path="lib/Ttgo/BallonLora.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="lib/Ttgo/BallonLora.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="platformio.ini" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="src/gateway.cpp" ex="false" tool="1" flavor2="0">
+      <item path="src/sender.cpp" ex="false" tool="1" flavor2="0">
       </item>
     </conf>
   </confs>

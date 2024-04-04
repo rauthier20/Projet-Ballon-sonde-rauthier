@@ -6,39 +6,28 @@
  */
 
 #include <Arduino.h>
+
+#include <BallonLora.h>
 #include <Afficheur.h>
-#include <Ttgo.h>
-#include <LoRa.h>
 
-
+BallonLora bl;
 char receivedString[50];
 int id = 0;
 
 void setup() {
 
     Serial.begin(9600);
+    
     while (!Serial);
 
-
-    pinMode(LED, OUTPUT);
-
-    SPI.begin(LORA_SCK, LORA_MISO, LORA_MOSI, LORA_CS);
-    LoRa.setPins(LORA_CS, LORA_RST, LORA_IRQ);
-
-    // Initialize LoRa with the specified frequency 433,775 Mhz.
-    if (!LoRa.begin(433775000)) {
-        Serial.println("Starting LoRa failed!");
-        while (1);
-    }
-
-    LoRa.setSpreadingFactor(12);
-    LoRa.setCodingRate4(8);
-
+    
+    bl.init();
     afficheur.init();
-    Serial.println("Setup done");
+    
     afficheur.afficher("Sender\nDone");
-
-
+    
+    Serial.println("Setup done");
+    Serial.println("LoRa Sender");
 }
 
 void loop() {
@@ -66,12 +55,9 @@ void loop() {
 
 
             // send message
-            digitalWrite(LED, 1); // turn the LED
-            LoRa.beginPacket(); // Démarre la séquence d'envoi d'un paquet.
-            LoRa.print(String(receivedString)); // Ecriture des données. Chaque paquet peut contenir jusqu'à 255 octets. 
-            LoRa.endPacket(); // Termine la séquence d'envoi d'un paquet.
-            digitalWrite(LED, 0); // turn the LED
+            bl.send(receivedString);
 
+            // réponse
             Serial.println("OK");
 
             // Réinitialise l'index pour la prochaine lecture
@@ -88,6 +74,7 @@ void loop() {
                 receivedString[id] = '\0';
                 // Affiche la chaîne reçue sur le port série
                 Serial.println("Chaîne reçue : " + String(receivedString));
+                bl.send(receivedString);
                 // Réinitialise l'index pour la prochaine lecture
                 id = 0;
             }
