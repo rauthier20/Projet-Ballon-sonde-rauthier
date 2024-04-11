@@ -35,6 +35,8 @@ private slots:
 
     void on_pushButtonM8_clicked();
 
+    void on_pushButtonPing_clicked();
+
 private:
     Ui::InterfacePrincipale *ui;
     QSerialPort lePort;

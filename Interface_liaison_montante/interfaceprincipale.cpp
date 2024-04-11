@@ -23,6 +23,7 @@ InterfacePrincipale::InterfacePrincipale(QWidget *parent)
 
     // les boutons sont désactivés
     ui->pushButtonM8->setEnabled(false);
+    ui->pushButtonPing->setEnabled(false);
 
 }
 
@@ -48,14 +49,7 @@ void InterfacePrincipale::onQSerialPort_ReadyRead()
 
         packet = packet.trimmed(); // Nettoyer les données en supprimant les espaces avant et après
 
-        if(packet.contains("OK"))
-        {
-            ui->textEditTrame->append("Le message <font color = 'red'> M8 </font> a bien été reçu par la ttgo");
-        }
-        else
-        {
-            qDebug() << "fin communication";
-        }
+        ui->textEditTrame->append(packet);  // affiche ce qui est envoyé par la ttgo
     }
 }
 
@@ -81,6 +75,7 @@ void InterfacePrincipale::on_actionConfigurer_triggered()
 
             // les boutons sont activés
             ui->pushButtonM8->setEnabled(true);
+            ui->pushButtonPing->setEnabled(true);
         }
         else
         {
@@ -105,6 +100,24 @@ void InterfacePrincipale::on_pushButtonM8_clicked()
         // ecriture des données sur le port serie
         lePort.write(data);
         ui->textEditTrame->setText("Envoie du message : <font color = 'red'> M8 </font>");
+    }
+    else
+    {
+        qDebug() << "Erreur lors de l'ouverture";
+    }
+}
+
+void InterfacePrincipale::on_pushButtonPing_clicked()
+{
+    if(lePort.isOpen())
+    {
+        // Envoyer un message
+        QString message = "ping\n";
+        // conversion message en tableau de bytes avec encodage UTF-8
+        QByteArray data = message.toUtf8();
+        // ecriture des données sur le port serie
+        lePort.write(data);
+        ui->textEditTrame->setText("Envoie du message : <font color = 'red'> ping </font>");
     }
     else
     {
